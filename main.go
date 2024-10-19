@@ -14,7 +14,7 @@ var (
 )
 
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Received %s request for %s", r.Method, r.URL.Path)
+	log.Printf("Received %s request for %s", r.Method, targetURL+r.URL.Path)
 
 	// Create a new request to the target cluster
 	targetReq, err := http.NewRequest(r.Method, targetURL+r.URL.Path, r.Body)
