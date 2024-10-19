@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: proxy-deployment
+  name: http-proxy-deployment
   namespace: proxy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: proxy
+      app: http-proxy-deployment
   template:
     metadata:
       labels:
-        app: proxy
+        app: http-proxy-deployment
     spec:
       containers:
         - name: proxy-container
-          image: your-image
+          image: ghcr.io/romankudravcev/reverse-proxy-http:latest
           env:
             - name: TARGET_URL
               valueFrom:
                 configMapKeyRef:
-                  name: proxy-config
+                  name: http-proxy-config
                   key: TARGET_URL
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: proxy-config
+                  name: http-proxy-config
                   key: PORT
           ports:
             - containerPort: 8734
@@ -37,7 +37,7 @@ metadata:
   namespace: proxy
 spec:
   selector:
-    app: http-proxy
+    app: http-proxy-deployment
   ports:
     - protocol: TCP
       port: 8734
