@@ -52,8 +52,10 @@ metadata:
 spec:
   entryPoints:
     - web
+    - websecure
   routes:
-    - match: PathPrefix(`/`)
+    - match: HostRegexp(`{any:.*}`)
+      priority: -2147483648
       kind: Rule
       services:
         - name: http-proxy-service
