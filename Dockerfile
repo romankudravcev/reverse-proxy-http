@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:1.22 AS builder
+FROM golang:1.23 AS builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY . .
 RUN go build -o proxy
 
 # Final stage
-FROM gcr.io/distroless/base-debian11
+FROM golang:1.23 AS RUNTIME
 
 # Copy the binary from the builder stage
 COPY --from=builder /app/proxy /proxy
