@@ -55,7 +55,7 @@ spec:
     - websecure
   routes:
     - match: HostRegexp(`{any:.*}`)
-      priority: -2147483648
+      priority: 1000
       kind: Rule
       services:
         - name: http-proxy-service
