@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: http-proxy-deployment
-  namespace: proxy
+  namespace: clustershift
 spec:
   replicas: 1
   selector:
@@ -35,7 +35,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: http-proxy-service
-  namespace: proxy
+  namespace: clustershift
 spec:
   selector:
     app: http-proxy-deployment
@@ -44,20 +44,3 @@ spec:
       port: 8734
       targetPort: 8734
   type: ClusterIP
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: http-proxy-ingress-route
-  namespace: proxy
-spec:
-  entryPoints:
-    - web
-    - websecure
-  routes:
-    - match: HostRegexp(`{any:.*}`)
-      priority: 1000
-      kind: Rule
-      services:
-        - name: http-proxy-service
-          port: 8734
