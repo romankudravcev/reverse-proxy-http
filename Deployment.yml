@@ -16,6 +16,7 @@ spec:
       containers:
         - name: proxy-container
           image: ghcr.io/romankudravcev/reverse-proxy-http:latest
+          imagePullPolicy: Always
           env:
             - name: TARGET_URL
               valueFrom:
