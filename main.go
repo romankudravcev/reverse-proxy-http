@@ -17,7 +17,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Received %s request for %s", r.Method, targetURL+r.URL.Path)
 
 	// Create a new request to the target cluster
-	targetReq, err := http.NewRequest(r.Method, targetURL+r.URL.Path, r.Body)
+	targetReq, err := http.NewRequest(r.Method, "http://"+targetURL+r.URL.Path, r.Body)
 	if err != nil {
 		http.Error(w, "Error creating request", http.StatusInternalServerError)
 		log.Printf("Error creating request: %v", err)
